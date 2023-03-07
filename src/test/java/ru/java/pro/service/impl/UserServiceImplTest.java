@@ -44,4 +44,16 @@ class UserServiceImplTest {
 
         verify(repositoryMock, atMostOnce()).getUserByName(anyString());
     }
+    @Test
+    @DisplayName("Пользователь с логином, не существующем в списке, не найден и метод возвращает false")
+    void shouldSearchUserByValidLoginShouldReturnsFalse() {
+        userRepository.addUser(user1);
+        when(repositoryMock.getUserByName(anyString()))
+                .thenReturn(false);
+
+        Assertions.assertEquals(false, out.checkUserExist(new User("")));
+
+        verify(repositoryMock, atMostOnce()).getUserByName(anyString());
+    }
+
 }
